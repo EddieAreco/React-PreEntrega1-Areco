@@ -1,6 +1,6 @@
 import React from "react";
 import '../css/Logo.css';
-import logoEmporioAreco from "../imagenes/logoEA.png";
+import logoEmporioAreco from "/imagenes/logoEA.png";
 import Image from 'react-bootstrap/Image';
 
 export default function Logo(src){
