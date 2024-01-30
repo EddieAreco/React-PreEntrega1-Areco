@@ -5,30 +5,12 @@ import ItemListContainer from "./componentes/ItemListContainer";
 
 export default function App() {
 
-  const [todosLosProductos, setTodosLosProductos] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [contadorProductos, setContadorProductos] = useState(0);
-
   return (
     <>
     
-    <NavBar 
-    todosLosProductos={todosLosProductos}
-    setTodosLosProductos={setTodosLosProductos}
-    total={total}
-    setTotal={setTotal}
-    contadorProductos={contadorProductos}
-    setContadorProductos={setContadorProductos}
-     />
+    <NavBar />
 
-    <ItemListContainer 
-    todosLosProductos={todosLosProductos}
-    setTodosLosProductos={setTodosLosProductos}
-    total={total}
-    setTotal={setTotal}
-    contadorProductos={contadorProductos}
-    setContadorProductos={setContadorProductos}
-     />
+    <ItemListContainer />
 
     </>
   );

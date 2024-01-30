@@ -5,17 +5,17 @@ export const data = [
         imagen: "/imagenes/fantanaranja.jpg",
         precio: 20,
         stock: 10,
-        cantidad: 0,
+        // aqui habia cantidad
         categoria: "gaseosa"
     },
     {
         id: 2,
-        nombre: "Andes Roja 473cc",
-        imagen: "/imagenes/andesroja473.jpg",
-        precio: 12,
+        nombre: "Aquarius 250",
+        imagen: "/imagenes/aquarius250.jpg",
+        precio: 6,
         stock: 5,
-        cantidad: 0,
-        categoria: "cerveza"
+        // aqui habia cantidad
+        categoria: "aguas"
     },
     {
         id: 3,
@@ -23,7 +23,7 @@ export const data = [
         imagen: "/imagenes/heineken.jpg",
         precio: 24,
         stock: 15,
-        cantidad: 0,
+        // aqui habia cantidad
         categoria: "cerveza"
     },
     {
@@ -32,7 +32,7 @@ export const data = [
         imagen: "/imagenes/quilmesnegra330.jpg",
         precio: 12,
         stock: 5,
-        cantidad: 0,
+        // aqui habia cantidad
         categoria: "cerveza"
     },
     {
@@ -41,7 +41,7 @@ export const data = [
         imagen: "/imagenes/skyyanana.jpg",
         precio: 18,
         stock: 8,
-        cantidad: 0,
+        // aqui habia cantidad
         categoria: "alcohol"
     },
     {
@@ -50,7 +50,7 @@ export const data = [
         imagen: "/imagenes/spritelimonada.jpg",
         precio: 20,
         stock: 11,
-        cantidad: 0,
+        // aqui habia cantidad
         categoria: "gaseosa"
     },
     {
@@ -59,7 +59,7 @@ export const data = [
         imagen: "/imagenes/vinodadamaracuya.jpg",
         precio: 12,
         stock: 5,
-        cantidad: 0,
+        // aqui habia cantidad
         categoria: "vino"
     },
     {
@@ -68,7 +68,7 @@ export const data = [
         imagen: "/imagenes/vinomalbectrumpeter.jpg",
         precio: 33,
         stock: 21,
-        cantidad: 0,
+        // aqui habia cantidad
         categoria: "vino"
     }
 ];
