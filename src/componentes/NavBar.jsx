@@ -1,11 +1,13 @@
 import React from "react";
 import { useState } from "react";
-import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Link, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu } from "@nextui-org/react";
 import { SearchIcon } from "./SearchIcon.jsx";
 import Categorias from "../componentes/Categorias.jsx";
 import Logo from "../componentes/Logo.jsx";
 import Usuario from "../componentes/Avatar.jsx";
 import CartWidget from "../componentes/CartWidget.jsx";
+import { Link } from 'react-router-dom';
+// AQUI QUITE EL COMPONENTE LINK DE NEXTUI Y LO REEMPLACE POR OTRO DEL MIMSMO NOMBRE QUE TRAIGO DE ROUTER
 
 export default function NavBar() {
 
@@ -16,6 +18,7 @@ export default function NavBar() {
     const menuItems = [
         "Nosotros",
         <Categorias />,
+        "Productos",
         "Ubicación",
         "Iniciar Sesión",
     ];
@@ -38,19 +41,26 @@ export default function NavBar() {
 
 
             <NavbarBrand className="hidden md:flex">
+                <Link className="flex" to={`/home`}>
                 <Logo />
                 <p className="font-bold text-inherit">Emporio Areco</p>
+                </Link>
             </NavbarBrand>
             <NavbarContent justify="start">
 
                 <NavbarContent className="hidden sm:flex gap-4" justify="center">
                     <NavbarItem>
-                        <Link color="foreground" href="#">
+                        <Link color="foreground" to={`/nosotros`}>
                             Nosotros
                         </Link>
                     </NavbarItem>
                     <NavbarItem isActive>
                         <Categorias />
+                    </NavbarItem>
+                    <NavbarItem>
+                        <Link color="foreground" to={`/productos`}>
+                            Productos
+                        </Link>
                     </NavbarItem>
                     <NavbarItem>
                         <Link color="foreground" href="#">
@@ -59,6 +69,7 @@ export default function NavBar() {
                     </NavbarItem>
                 </NavbarContent>
 
+{/* EN ESTE COMPONENTE HAY UN NOTA PARA TENER EN CUENTA */}
                 <NavbarMenu className="mt-5">
                     {menuItems.map((item, index) => (
                         <NavbarMenuItem key={`${item}-${index}`}>
@@ -74,6 +85,22 @@ export default function NavBar() {
                             </Link>
                         </NavbarMenuItem>
                     ))}
+
+                    {/* NOTA: SOLUCIONAR PARA QUE CADA OPCION DE ESTE MENU DESPLEGABLE, ME LLEVE A LA SECCION QUE QUIERO EN EL HREF QUE ESTA DENTRO DEL NavbarMenuItem, SINO, METER ESTO DENTRO DEL NavbarMenu:
+                    <NavbarItem>
+                        <Link color="foreground" href="/nosotros">
+                            Nosotros
+                        </Link>
+                    </NavbarItem>
+                    <NavbarItem isActive>
+                        <Categorias />
+                    </NavbarItem>
+                    <NavbarItem>
+                        <Link color="foreground" href="#">
+                            Ubicacion
+                        </Link>
+                    </NavbarItem> */}
+                    
                 </NavbarMenu>
 
             </NavbarContent>

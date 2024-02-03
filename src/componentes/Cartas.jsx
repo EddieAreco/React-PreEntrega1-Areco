@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { data } from "../data.js";
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import BotonesCards from './BotonesCards.jsx';
+import { Link } from "react-router-dom";
 
 export const Cartas = () => {
 
-  const [products, setProducts] = useState(data)
+  const [products, setProducts] = useState([])
+  // poner un useEffect acá que tenga fetch
+  useEffect(() => {
+
+    fetch('https://65bd501ab51f9b29e9334a3e.mockapi.io/bebidas/products/')
+      .then((response) => response.json())
+      .then((response_json) => setProducts(response_json))
+
+  }, []
+  );
 
   const [sinStock, setSinStock] = useState(false);
 
@@ -42,7 +52,6 @@ export const Cartas = () => {
       setSinStock((prevSinStock) => ({ ...prevSinStock, [productId]: true }));
     }
   }
-  // poner un useEffect acá que tenga fetch de data
 
   return (
     <>
@@ -84,9 +93,14 @@ export const Cartas = () => {
             />
           </CardFooter>
 
-          <a className="text-blue-600/75 text-lg">Ver mas</a>
+          <Link 
+          className="text-blue-600/75 text-xl font-bold"
+          to={`/productos/${productos.id}`}
+          >
+            Ver mas
+            </Link>
 
-          {sinStock[productos.id] && <p className="text-white bg-black"> Sin stock </p>}
+          {sinStock[productos.id] && <p className="text-white bg-red-700"> Sin stock </p>}
 
         </Card>
 

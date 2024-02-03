@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Cartas } from "./Cartas.jsx"
+import { Cartas } from "./Cartas.jsx";
 import { data } from "../data.js";
 
 export default function ItemListContainer() {

@@ -4,7 +4,7 @@ export const data = [
         nombre: "Fanta",
         imagen: "/imagenes/fantanaranja.jpg",
         precio: 20,
-        stock: 10,
+        stock: 2,
         // aqui habia cantidad
         categoria: "gaseosa"
     },

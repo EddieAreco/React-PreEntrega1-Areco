@@ -30,13 +30,9 @@ export default function BotonesCards(props) {
             
             <Button 
                 color="primary"
-                className="text-white bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-300 dark:focus:ring-orange-800 shadow-lg shadow-orange-500/50 dark:shadow-lg dark:shadow-orange-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                <button
-                    color="primary"
-                    onClick={() => { handlerQuantity ( product.id, product.cantidad + 1 )}}
-                    className="px-4 uppercase text-xs"
+                className="text-white bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-300 dark:focus:ring-orange-800 shadow-lg shadow-orange-500/50 dark:shadow-lg dark:shadow-orange-800/80 font-medium rounded-lg text-xs px-5 py-4 text-center uppercase"
+                onClick={() => { handlerQuantity ( product.id, product.cantidad + 1 )}}
                 > comprar
-                    </button>
             </Button>
         </div>
 
