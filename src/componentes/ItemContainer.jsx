@@ -90,6 +90,7 @@ export default function ItemContainer() {
                             <b className="text-black">Nombre del producto: {productos.nombre}</b>
                             <p className="font-semibold"> Precio ${productos.precio} </p>
                             <p className="font-semibold"> Stock disponible: {productos.stock} unidades</p>
+                            <p className="font-semibold"> Categoria: {productos.categoria}</p>
                             <p className="font-semibold text-amber-700"> Descripcion:{productos.descripcion} </p>
                         </CardBody>
 

@@ -4,6 +4,10 @@ import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import BotonesCards from './BotonesCards.jsx';
 import { Link } from "react-router-dom";
 
+// import { Item } from './Item.jsx';
+
+// export const Cartas = ({ products }) => products.map(( product, index ) => <Item key={index} item={product} />)
+
 export const Cartas = () => {
 
   const [products, setProducts] = useState([])

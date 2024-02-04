@@ -5,12 +5,14 @@ import ItemListContainer from "./componentes/ItemListContainer";
 import Nosotros from './componentes/Nosotros.jsx';
 import ItemContainer from "./componentes/ItemContainer";
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { CartProvider } from "./componentes/cartContext";
 
 export default function App() {
 
   return (
     <>
 
+{/* <CartProvider > */}
       <BrowserRouter>
       
       <NavBar />
@@ -19,11 +21,15 @@ export default function App() {
 
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/productos" element={<ItemListContainer />} />
+          <Route path="/productos/categoria/:producto_categoria" element={<ItemListContainer />} />
           <Route path="/productos/:producto_id" element={<ItemContainer />} />
 
         </Routes>
         
       </BrowserRouter>
+
+      {/* </CartProvider> */}
+
     </>
   );
 }
