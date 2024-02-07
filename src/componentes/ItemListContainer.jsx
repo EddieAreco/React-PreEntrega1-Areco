@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Cartas } from "./Cartas.jsx";
 import { data } from "../data.js";
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 
 export default function ItemListContainer() {
 
@@ -11,6 +11,8 @@ export default function ItemListContainer() {
     const [filteredProducts, setFilteredProducts] = useState([]);
 
     const [loading, setLoading] = useState(false);
+
+    const { producto_categoria } = useParams();
 
     useEffect(() => {
         
@@ -27,14 +29,18 @@ export default function ItemListContainer() {
             });
     }, []);
 
-    const handleCategoryChange = (newCategory) => {
+     useEffect(() => {
+         console.log ( products.filter(product => product.categoria === producto_categoria) )
 
-        const newFilteredProducts = products.filter(product =>
-            newCategory ? product.categoria === newCategory : true
-        );
+         producto_categoria
+         ? setFilteredProducts( products.filter(product => product.categoria === producto_categoria) )
+         : setFilteredProducts ( products );
 
-        setSelectedCategory(newCategory);
-        setFilteredProducts(newFilteredProducts);
+         setSelectedCategory( producto_categoria );
+     }, [producto_categoria])
+
+     const updateProducts = (newProducts) => {
+        setProducts(newProducts);
     };
 
     return (
@@ -52,7 +58,7 @@ export default function ItemListContainer() {
             <ul className="flex justify-center gap-5">
                 {categories.map(category => (
                     <li key={category} className="text-white">
-                    <NavLink to={`/productos/categoria/${category}`} onClick={() => handleCategoryChange(category)}>
+                    <NavLink to={`/productos/categoria/${category}`} >
                       {category}
                     </NavLink>
                   </li>
@@ -63,7 +69,7 @@ export default function ItemListContainer() {
                 className="gap-3 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 mt-5"
             >
 
-                <Cartas products={filteredProducts} />
+                <Cartas products={filteredProducts} updateProducts={updateProducts} />
 
             </div>
         </>

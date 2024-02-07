@@ -3,23 +3,7 @@ import { data } from "../data.js";
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import BotonesCards from './BotonesCards.jsx';
 import { Link } from "react-router-dom";
-
-// import { Item } from './Item.jsx';
-
-// export const Cartas = ({ products }) => products.map(( product, index ) => <Item key={index} item={product} />)
-
-export const Cartas = () => {
-
-  const [products, setProducts] = useState([])
-  // poner un useEffect acá que tenga fetch
-  useEffect(() => {
-
-    fetch('https://65bd501ab51f9b29e9334a3e.mockapi.io/bebidas/products/')
-      .then((response) => response.json())
-      .then((response_json) => setProducts(response_json))
-
-  }, []
-  );
+export const Cartas = ( {products, updateProducts} ) => {
 
   const [sinStock, setSinStock] = useState(false);
 
@@ -39,13 +23,13 @@ export const Cartas = () => {
     // Verifico si la nueva cantidad es válida en términos de stock y mayor que cero
     if (newQuantity <= productosPorId.stock && newQuantity >= 0) {
 
-      // Actualizo la cantidad del producto en el estado
-      const actualizacionProductos = products.map((prod) =>
-        prod.id === productId ? { ...prod, cantidad: newQuantity } : prod
-      );
+      const actualizacionProductos = [...products];
 
-      // Actualizo el valor del estado de products que seria la informacion traida de data, con los productos actualizados
-      setProducts(actualizacionProductos);
+      actualizacionProductos[productosPorId] = {...actualizacionProductos[productosPorId], cantidad: newQuantity};
+
+      console.log('actualizacion es:', actualizacionProductos)
+
+      updateProducts(actualizacionProductos);
 
       // Quito el mensaje de error una vez que la cantidad sea menor al stock
       setSinStock((prevSinStock) => ({ ...prevSinStock, [productId]: false }));

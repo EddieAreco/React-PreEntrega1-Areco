@@ -18,7 +18,6 @@ export default function NavBar() {
     const menuItems = [
         "Nosotros",
         <Categorias />,
-        "Productos",
         "Ubicación",
         "Iniciar Sesión",
     ];
@@ -41,7 +40,7 @@ export default function NavBar() {
 
 
             <NavbarBrand className="hidden md:flex">
-                <Link className="flex" to={`/home`}>
+                <Link className="flex" to={`/`}>
                 <Logo />
                 <p className="font-bold text-inherit">Emporio Areco</p>
                 </Link>
@@ -56,11 +55,6 @@ export default function NavBar() {
                     </NavbarItem>
                     <NavbarItem isActive>
                         <Categorias />
-                    </NavbarItem>
-                    <NavbarItem>
-                        <NavLink color="foreground" to={`/productos`}>
-                            Productos
-                        </NavLink>
                     </NavbarItem>
                     <NavbarItem>
                         <Link color="foreground" href="#">

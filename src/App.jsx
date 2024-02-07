@@ -20,7 +20,7 @@ export default function App() {
         <Routes>
 
           <Route path="/nosotros" element={<Nosotros />} />
-          <Route path="/productos" element={<ItemListContainer />} />
+          <Route path="/" element={<ItemListContainer />} />
           <Route path="/productos/categoria/:producto_categoria" element={<ItemListContainer />} />
           <Route path="/productos/:producto_id" element={<ItemContainer />} />
 
