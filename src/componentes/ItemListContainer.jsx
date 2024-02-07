@@ -39,10 +39,6 @@ export default function ItemListContainer() {
          setSelectedCategory( producto_categoria );
      }, [producto_categoria])
 
-     const updateProducts = (newProducts) => {
-        setProducts(newProducts);
-    };
-
     return (
         <>
 
@@ -69,7 +65,7 @@ export default function ItemListContainer() {
                 className="gap-3 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 mt-5"
             >
 
-                <Cartas products={filteredProducts} updateProducts={updateProducts} />
+                <Cartas products={filteredProducts} />
 
             </div>
         </>

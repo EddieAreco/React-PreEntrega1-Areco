@@ -1,45 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { data } from "../data.js";
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import BotonesCards from './BotonesCards.jsx';
 import { Link } from "react-router-dom";
-export const Cartas = ( {products, updateProducts} ) => {
-
-  const [sinStock, setSinStock] = useState(false);
-
-  const [error, setError] = useState({});
-
-  function handlerQuantity(productId, newQuantity) {
-
-    // Busco el producto en base al ID
-    const productosPorId = products.find((prod) => prod.id === productId);
-
-    // Verifico si existe el producto que busque por el id
-    if (!productosPorId) {
-      setError(true);
-      return;
-    }
-
-    // Verifico si la nueva cantidad es válida en términos de stock y mayor que cero
-    if (newQuantity <= productosPorId.stock && newQuantity >= 0) {
-
-      const actualizacionProductos = [...products];
-
-      actualizacionProductos[productosPorId] = {...actualizacionProductos[productosPorId], cantidad: newQuantity};
-
-      console.log('actualizacion es:', actualizacionProductos)
-
-      updateProducts(actualizacionProductos);
-
-      // Quito el mensaje de error una vez que la cantidad sea menor al stock
-      setSinStock((prevSinStock) => ({ ...prevSinStock, [productId]: false }));
-
-    } else {
-
-      // Muestro mensaje de error si la cantidad no es válida
-      setSinStock((prevSinStock) => ({ ...prevSinStock, [productId]: true }));
-    }
-  }
+export const Cartas = ( {products} ) => {
 
   return (
     <>
@@ -75,8 +39,11 @@ export const Cartas = ( {products, updateProducts} ) => {
               // A la prop product le asigno productos
               product={productos}
 
-              // A handlerQuantity le paso como parametros el id del producto y la cantidad
-              handlerQuantity={(id, quantity) => handlerQuantity(id, quantity)}
+              stock= {productos.stock}
+
+              initial= {0}
+
+              onAdd= {(quantity) => console.log(quantity)}
 
             />
           </CardFooter>
@@ -87,8 +54,6 @@ export const Cartas = ( {products, updateProducts} ) => {
           >
             Ver mas
             </Link>
-
-          {sinStock[productos.id] && <p className="text-white bg-red-700"> Sin stock </p>}
 
         </Card>
 
