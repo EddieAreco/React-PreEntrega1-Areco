@@ -27,18 +27,18 @@ export default function ItemContainer() {
         <>
             <h1 className='text-white text-3xl m-5'>Detalle del producto</h1>
 
-<Link 
-className="text-white text-xl font-bold"
-to={`/`}
->
-  Volver
-  </Link>
+            <Link
+                className="text-white text-xl font-bold"
+                to={`/`}
+            >
+                Volver
+            </Link>
 
-                <div className="flex items-center justify-center">
-                    
-                    <Cartas products= {products} descripcion={true} link={false}/>
+            <div className="flex items-center justify-center w-96 mx-auto">
 
-                </div>
+                <Cartas products={products} descripcion={true} link={false} />
+
+            </div>
         </>
 
     )
