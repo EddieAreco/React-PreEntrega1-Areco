@@ -3,7 +3,7 @@ import { data } from "../data.js";
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import BotonesCards from './BotonesCards.jsx';
 import { Link } from "react-router-dom";
-export const Cartas = ( {products} ) => {
+export const Cartas = ({ products, descripcion, link }) => {
 
   return (
     <>
@@ -30,6 +30,7 @@ export const Cartas = ( {products} ) => {
             <b className="text-black">{productos.nombre}</b>
             <p className="font-semibold"> Precio ${productos.precio} </p>
             <p className="font-semibold"> Stock {productos.stock} </p>
+            {descripcion && <p className='font-semibold text-amber-900'>Descripción: {productos.descripcion}</p>}
           </CardBody>
 
           <CardFooter className="bg-black">
@@ -39,21 +40,21 @@ export const Cartas = ( {products} ) => {
               // A la prop product le asigno productos
               product={productos}
 
-              stock= {productos.stock}
+              stock={productos.stock}
 
-              initial= {0}
+              initial={0}
 
-              onAdd= {(quantity) => console.log(quantity)}
+              onAdd={(quantity) => console.log(quantity)}
 
             />
           </CardFooter>
 
-          <Link 
-          className="text-blue-600/75 text-xl font-bold"
-          to={`/productos/${productos.id}`}
+          {link && <Link
+            className="text-blue-600/75 text-xl font-bold"
+            to={`/productos/${productos.id}`}
           >
             Ver mas
-            </Link>
+          </Link>}
 
         </Card>
 

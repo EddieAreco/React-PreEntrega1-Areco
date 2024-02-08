@@ -65,7 +65,7 @@ export default function ItemListContainer() {
                 className="gap-3 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 mt-5"
             >
 
-                <Cartas products={filteredProducts} />
+                <Cartas products={filteredProducts} descripcion={false} link={true}/>
 
             </div>
         </>
