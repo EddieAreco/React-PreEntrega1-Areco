@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button } from "@nextui-org/react";
-import { CgMathPlus } from "react-icons/cg";
-import { CgMathMinus } from "react-icons/cg";
+import { CartContext } from '../context/cartContext';
 
-export default function BotonesCards({ product, stock, initial, onAdd }) {
+export default function BotonesCards({ product, stock, initial }) {
 
     product.cantidad = typeof (product.cantidad) !== 'undefined' ? product.cantidad : 0;
 
     const [cantidad, setCantidad] = useState(initial)
     const [sinStock, setSinStock] = useState(false);
     const [error, setError] = useState({});
+
+    const { handleAdd } = useContext(CartContext)
 
     const restarCantidad = () => {
         if (cantidad > 0) {
@@ -31,6 +32,10 @@ export default function BotonesCards({ product, stock, initial, onAdd }) {
         }
     };
 
+    const addProducts = () => {
+        handleAdd(product, cantidad);
+    }
+
     return (
 
         <>
@@ -43,7 +48,7 @@ export default function BotonesCards({ product, stock, initial, onAdd }) {
                         size="md"
                         color="primary"
                         className="text-white bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-300 dark:focus:ring-orange-800 shadow-lg shadow-orange-500/50 dark:shadow-lg dark:shadow-orange-800/80 font-medium rounded-lg text-xs px-5 py-4 text-center"
-                        onClick={restarCantidad}>
+                        onClick={restarCantidad} >
                         -
                     </Button>
 
@@ -62,7 +67,7 @@ export default function BotonesCards({ product, stock, initial, onAdd }) {
                     <Button
                         color="primary"
                         className="text-white bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-300 dark:focus:ring-orange-800 shadow-lg shadow-orange-500/50 dark:shadow-lg dark:shadow-orange-800/80 font-medium rounded-lg text-xs px-5 py-4 text-center uppercase w-full"
-                        onClick={() => onAdd(cantidad)}
+                        onClick={addProducts}
                         disables={!stock}
                     >
                         Agregar al carrito

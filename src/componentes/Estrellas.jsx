@@ -12,21 +12,23 @@ function Estrellas() {
     return (
         <div>
 
-        <p className='fw-bolder'>Calificación :</p>
 
-        <div className='flex justify-center'>
+<p className='fw-bolder'>Calificación :</p>
+
+        <div className='flex justify-center align-center w-1/2 mx-auto'>
+
                 {[...Array(5)].map((rating, index)=> {
                     const number = index + 1;
                     return(
-                        <label>
+                        <label className='w-24 flex justify-center m-2'>
                             <input 
-                            className= "d-none"
+                            className= "hidden w-24"
                             name='star'
                             value= {number} 
                             onClick={() => setStar(number)} 
                             />
 
-                            <span key={index} className='estrellas text-warning h3 ms-1'>
+                            <span key={index} className='text-warning h3'>
 
                             {star >= index +1 ? (<BsFillStarFill role="button" />) 
                             :

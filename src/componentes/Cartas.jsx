@@ -1,5 +1,4 @@
 import React from "react";
-import { data } from "../data.js";
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import BotonesCards from './BotonesCards.jsx';
 import { Link } from "react-router-dom";
@@ -44,7 +43,7 @@ export const Cartas = ({ products, descripcion, link }) => {
 
               initial={0}
 
-              onAdd={(quantity) => console.log(quantity)}
+              // onAdd={(quantity) => console.log(quantity)}
 
             />
           </CardFooter>
