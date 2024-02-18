@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { data } from "../data.js";
 import { useParams, Link } from "react-router-dom";
 import { Cartas } from './Cartas.jsx';
 import { Loading } from './Loading.jsx';
@@ -8,30 +7,37 @@ import { getDocs, getFirestore, collection, where, query } from 'firebase/firest
 
 export default function ItemContainer() {
 
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState();
     const [loading, setLoading] = useState(false);
     const { producto_id } = useParams();
 
     useEffect(() => {
+        
+        console.log(typeof producto_id); 
 
-        setLoading(true)
+        const db = getFirestore();
 
-        fetch(`https://65bd501ab51f9b29e9334a3e.mockapi.io/bebidas/products/${producto_id}`)
-            .then((response) => response.json())
-            .then((response_json) => {
+        const consulta = query(
+            collection (db, "Item"),
+            where('id', '==', producto_id)
+        )
 
-                if ('id' in response_json) {
-                    setProducts([response_json]);
+        getDocs(consulta)
+            .then (snapshot => {
 
-                }
+                const dataExtraida = snapshot.docs.map( datos => datos.data())
+                setProducts( dataExtraida[0] );
+                console.log( "el producto encontrado es:", dataExtraida)
+
             })
             .finally(
                 setTimeout(() => {
                     setLoading(false);
-                }, 3000)
+                }, 1500)
             );
-    }, [producto_id]);
+    }, [producto_id])
 
+    
     return loading ? (
 
         <Loading />
@@ -50,7 +56,9 @@ export default function ItemContainer() {
 
             <div className="flex items-center justify-center w-96 mx-auto">
 
-                <Cartas products={products} descripcion={true} link={false} />
+                {
+                    products && <Cartas products={products} descripcion={true} link={false} />
+                }
 
             </div>
         </>

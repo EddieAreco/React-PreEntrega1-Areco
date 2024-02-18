@@ -1,14 +1,13 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
-import { CartContext } from "../context/cartContext";
-import { getDocs, getFirestore, query, where, collection } from "firebase/firestore";
-import { Cartas } from "./Cartas";
+import { getDocs, getFirestore, collection } from "firebase/firestore";
+import { NavLink } from "react-router-dom";
 
 export default function Categorias() {
 
   const [categoria, setCategoria] = useState([]);
-  const [productos, setProductos] = useState([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
+
 
   useEffect( () => {
 
@@ -24,23 +23,6 @@ export default function Categorias() {
     obtenerCategorias();
 
 }, [])
-
-useEffect(() => {
-  const obtenerProductos = async () => {
-    const db = getFirestore();
-    let q;
-    if (categoriaSeleccionada === "Todas") {
-      q = collection(db, "Item");
-    } else {
-      q = query(collection(db, "Item"), where("categoria", "==", categoriaSeleccionada));
-    }
-    const snapshot = await getDocs(q);
-    const productos = snapshot.docs.map(doc => doc.data());
-    setProductos(productos);
-  };
-
-  obtenerProductos();
-}, [categoriaSeleccionada]);
 
 const handleCategory = (categoria) => {
   setCategoriaSeleccionada(categoria);
@@ -58,11 +40,13 @@ const handleCategory = (categoria) => {
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
       {categoria.map(category => (
-          <DropdownItem key={category} onClick={ () => handleCategory(category) }>{category}</DropdownItem>
+          <DropdownItem key={category}>
+            <NavLink to={`/productos/categoria/${category}`} onClick={ () => handleCategory(category) }>
+            {category}
+            </NavLink>
+            </DropdownItem>
         ))}
       </DropdownMenu>
-
-      <Cartas products={ productos } descripcion={false} link={true}/>
 
     </Dropdown>
   );

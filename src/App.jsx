@@ -11,9 +11,9 @@ import { CartProvider } from "./context/cartContext";
 export default function App() {
 
   return (
-
-    <CartProvider>
     <>
+      <CartProvider>
+
         <BrowserRouter>
 
           <NavBar />
@@ -30,8 +30,7 @@ export default function App() {
 
         </BrowserRouter>
 
+      </CartProvider>
     </>
-
-    </CartProvider>
   );
 }

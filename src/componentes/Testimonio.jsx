@@ -1,22 +1,20 @@
-import React from 'react';
+import { Image } from "@nextui-org/react";
+
 import Estrellas from './Estrellas.jsx';
-import '../css/Testimonio.css'
 
 export default function Testimonio(props) {
         return (
 
-            <div className='d-flex justify-content-center bg-white'>
+                <div className='m-4 mx-auto flex justify-center items-center rounded-xl bg-white w-5/6'>
 
-                <div className='contenedor-testimonio flex justify-center align-items-center bg-light w-75'>
-
-                    <img
-                        className='imagen-testimonio mx-auto d-block align-items-start'
-                        src={`../Testimonio/${props.imagenNombre}.png`} 
-                        // ARREGLAR CUESTION DE IMAGEN, USAR REQUIRED PERO NO FUNCIONA, EVALUAR OTRAS OPCIONES O VER DONDE PONER LA IMAGEN PARA QUE FUNCIONE
+                    <Image
+                        className='size-60'
+                        isZoomed
+                        src={`../../public/Testimonio/${props.imagenNombre}.png`} 
                         alt={`Foto de ${props.nombre}`}
                     />
 
-                    <div className='contenedor-texto-testimonio p-5'>
+                    <div className='p-5 w-full'>
 
                             <Estrellas />
                         
@@ -24,10 +22,9 @@ export default function Testimonio(props) {
                             <strong>{props.nombre}</strong>
                         </p>
 
-                        <p className='texto-testimonio fw-bold'> "{props.testimonio}"</p>
+                        <p className='fw-bold'> "{props.testimonio}"</p>
 
                     </div>
                 </div>
-            </div>
         );
     }

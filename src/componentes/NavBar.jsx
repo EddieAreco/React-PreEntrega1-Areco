@@ -20,7 +20,7 @@ export default function NavBar() {
     const menuItems = [
         "Nosotros",
         <Categorias />,
-        "Ubicación",
+        "Carrito",
         "Iniciar Sesión",
     ];
 
@@ -35,8 +35,15 @@ export default function NavBar() {
                 <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
 
                 <NavbarBrand>
+
+                    <NavLink to={`/`}>
+
                     <Logo />
+
+                    </NavLink>
+
                 </NavbarBrand>
+                
             </NavbarContent>
 
 
@@ -50,26 +57,37 @@ export default function NavBar() {
             <NavbarContent justify="start">
 
                 <NavbarContent className="hidden sm:flex gap-4" justify="center">
+
                     <NavbarItem>
+
                         <NavLink color="foreground" to={`/nosotros`}>
                             Nosotros
                         </NavLink>
+
                     </NavbarItem>
+
                     <NavbarItem isActive>
+
                         <Categorias />
+
                     </NavbarItem>
+
                     <NavbarItem>
+
                         <NavLink color="foreground" to={`/carrito`}>
-                            Ubicacion
+                        Carrito
                         </NavLink>
+
                     </NavbarItem>
+
                 </NavbarContent>
 
 {/* EN ESTE COMPONENTE HAY UN NOTA PARA TENER EN CUENTA */}
                 <NavbarMenu className="mt-5">
                     {menuItems.map((item, index) => (
                         <NavbarMenuItem key={`${item}-${index}`}>
-                            <Link
+                            <NavLink
+                            to={`/${item}`}
                                 color={
                                     index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
                                 }
@@ -78,7 +96,7 @@ export default function NavBar() {
                                 size="lg"
                             >
                                 {item}
-                            </Link>
+                            </NavLink>
                         </NavbarMenuItem>
                     ))}
 
