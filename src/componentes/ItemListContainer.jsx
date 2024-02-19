@@ -80,7 +80,7 @@ export default function ItemListContainer() {
                 
         {
             productos.map( producto => (
-                 <Cartas products={producto} descripcion={false} link={true} />
+                 <Cartas key= {producto.id} products={producto} descripcion={false} link={true} />
             )) 
         }
 

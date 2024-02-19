@@ -1,47 +1,20 @@
 import { useState, useEffect, useContext } from 'react';
 import { doc, addDoc, getDocs, collection, getFirestore } from 'firebase/firestore';
 import { Loading } from './Loading'
-import { Image } from '@nextui-org/react';
+import { Image, Button } from '@nextui-org/react';
 import { CartContext } from '../context/cartContext.jsx';
+import { NavLink } from 'react-router-dom';
+import { BsFillCartXFill, BsCartCheckFill } from "react-icons/bs";
 
 export default function Carrito() {
 
-    const [products, setProducts] = useState([])
-    const [loading, setLoading] = useState(false);
+    const { carrito, cantidadComprada, totalCompra } = useContext(CartContext)
 
-    const { totalCompra } = useContext(CartContext)
-
-    useEffect(() => {
-
-        setLoading(true);
-
-        const db = getFirestore();
-
-        const productosOrden = collection(db, 'ordenes')
-
-        getDocs(productosOrden)
-            .then(snapshot => {
-
-                const dataExtraida = snapshot.docs.map(datos => datos.data())
-                setProducts(dataExtraida);
-
-            })
-            .finally(
-                setTimeout(() => {
-                    setLoading(false);
-                }, 4000)
-            );
-
-    }, [])
-
-    return loading ? (
-        <Loading />
-
-    ) : (
+    return (
         <>
             <div className='text-white font-bold mt-4 border-2 p-2'>
                 <ul className='flex uppercase justify-between mx-auto'>
-                    <li className='me-12'>producto</li>
+                    <li>producto</li>
                     <li>precio</li>
                     <li>cantidad</li>
                     <li>subtotal</li>
@@ -49,55 +22,58 @@ export default function Carrito() {
                 </ul>
             </div>
 
-            <div className='mx-auto mt-3 '>
-                {products.map(productos => (
+            <div className='mx-auto mt-3 text-white'>
 
-                    <div key={productos.id}>
+                {carrito.length > 0 ? (
 
-                        {/* <div className='flex justify-between'>
-                            <p className='text-blue-700'>Comprador: {productos.comprador.nombre}</p>
-                            <p className='text-blue-700'>Email: {productos.comprador.email}</p>
-                            <p className='text-blue-700'>Teléfono: {productos.comprador.telefono}</p>
-                        </div> */}
+                    carrito.map((item, index) => (
+                        <div>
+                            <div>
+                                <div key={index} className="border-b-3 mb-2">
+                                    <div className='flex justify-between items-center mt-3 border-b-4'>
 
-                        <div className='flex justify-between mt-3 border-b-4'>
+                                        <div className="flex-column justify-center">
 
-                            {productos.item ? (
+                                            <Image width={100} src={item.imagen} />
+                                            <p>{item.nombre}</p>
 
-                                <ul className='flex text-white uppercase justify-between items-center w-full mx-auto my-3'>
-                                    <li>
-                                        <Image
-                                            shadow="sm"
-                                            radius="sm"
-                                            alt={productos.item.nombre}
-                                            className="object-cover h-[80px] w-24"
-                                            src={productos.item.imagen}
-                                        />
+                                        </div>
 
-                                        {productos.item.nombre}
-                                    </li>
-                                    <li>
-                                        $ {productos.item.precio}
-                                    </li>
-                                    <li>
-                                        {productos.item.cantidad}
-                                    </li>
-                                    <li>
-                                        $ 100
-                                    </li>
-                                    <li>
-                                        { totalCompra }
-                                    </li>
-                                </ul>
-                            ) : (
-                                <p>No hay ítems</p>
-                            )}
+                                        <p>Precio: ${item.precio}</p>
+                                        <p>Cantidad: {item.cantidad} unid.</p>
+                                        <p>Sub total: $ {totalCompra}</p>
+                                        <p>Total compra: ${totalCompra}</p>
 
+                                    </div>
+                                </div>
+
+                                <div className='text-white flex justify-end'>
+                                    <p>total a pagar: $ {totalCompra}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <Button variant='shadow' color='primary' size='lg' className='text-white bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-orange-300 dark:focus:ring-orange-800 shadow-lg shadow-orange-500/50 dark:shadow-lg dark:shadow-orange-800/80 font-medium rounded-lg text-xs px-5 py-4 text-center uppercase mt-3'>
+                                    <BsCartCheckFill style={{ fontSize: 25 }} />
+                                    Realizar pedido
+                                    <BsFillCartXFill />
+                                </Button>
+                            </div>
                         </div>
+                    ))
+                ) : (
 
-                    </div>
+                    <p className='mx-auto mt-3 text-white'>No hay productos en el carrito.
+                        <NavLink to={'/'}>
+                            <a className='ms-1'>
+                                <strong>
+                                    Agregue productos
+                                </strong>
+                            </a>
+                        </NavLink>
+                    </p>
 
-                ))}
+                )}
+
             </div>
 
         </>

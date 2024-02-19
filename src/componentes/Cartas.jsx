@@ -30,12 +30,12 @@ export const Cartas = ({ products, descripcion, link }) => {
 
             {descripcion && (
               <div>
-            <p className='font-semibold text-amber-900'>Descripción: {products.descripcion}</p>
-            <p className='font-semibold text-amber-900'>Categoria: {products.categoria}</p>
-            <p className='font-semibold text-amber-900'>ID del Producto: {products.id}</p>
-            </div>
+                <p className='font-semibold text-amber-900'>Categoria: {products.categoria}</p>
+                <p className='font-semibold text-amber-900'>ID del Producto: {products.id}</p>
+                <p className='font-semibold text-amber-900'><strong>Descripción:</strong> {products.descripcion}</p>
+              </div>
             )
-            
+
             }
           </CardBody>
 

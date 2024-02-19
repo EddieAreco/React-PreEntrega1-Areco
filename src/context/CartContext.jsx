@@ -9,8 +9,6 @@ export const CartProvider = ({ children }) => {
     const [carrito, setCarrito] = useState([]);
     const [totalCompra, setTotalCompra] = useState(0);
 
-    const ejemplo = "Mi carrito"
-
     const handleAdd = async (item, quantity) => {
 
         if (isInCart(item)) {
@@ -102,7 +100,6 @@ export const CartProvider = ({ children }) => {
     return (
 
         <CartContext.Provider value={{
-            ejemplo,
             carrito,
             setCarrito,
             handleAdd,
