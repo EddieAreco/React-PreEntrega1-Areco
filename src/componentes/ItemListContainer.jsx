@@ -16,8 +16,6 @@ export default function ItemListContainer() {
 
     const { producto_categoria } = useParams();
 
-    const { clear } = useContext(CartContext)
-
     useEffect(() => {
 
         const db = getFirestore();
@@ -69,10 +67,6 @@ export default function ItemListContainer() {
 
         <>
         <h1 className="text-white text-5xl my-3">{ titulo }</h1>
-
-        <button onClick={ clear } className="text-white">
-            limpiar carrito
-        </button>
 
         <div
                 className="gap-3 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 mt-5"

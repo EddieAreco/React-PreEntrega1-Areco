@@ -13,9 +13,9 @@ export const CartProvider = ({ children }) => {
         return precio * cantidad;
     };
 
-    const calcularTotal = ( carrito ) => {
+    const calcularTotal = (carrito) => {
         let total = carrito.reduce((total, product) => total + product.precio * product.cantidad, 0);
-        return total; 
+        return total;
     }
 
     const handleAdd = async (item, quantity) => {
@@ -39,57 +39,45 @@ export const CartProvider = ({ children }) => {
             setTotalCompra(total);
             return prevCarrito;
         });
-
-        // ESTO ESTA AGREGANDO PRODUCTOS AGREGADOS AL CARRITO, A LA COLECCION DE FIRESTONE LLAMADA "ORDENES", CHATGPT, SI VES LAS LINEAS SIGUIENTES QUE TENGO COMENTADAS EN MI CODIGO, IGNORALAS POR FAVR Y SOLO CONCENTRATE EN EL RESTO DEL CODIGO
-        // const db = getFirestore();
-        // const ordenesCollection = collection(db, 'ordenes');
-
-        // const querySnapshot = await getDocs(ordenesCollection);
-        // const existingProduct = querySnapshot.docs.find((doc) => doc.data().item.id === item.id);
-
-        // if (existingProduct) {
-        //     // Si el producto ya existe, actualiza el campo de cantidad
-        //     const docRef = doc(db, 'ordenes', existingProduct.id);
-        //     const existingQuantity = existingProduct.data().item.cantidad;
-        //     const updatedQuantity = existingQuantity - existingQuantity + quantity;
-        //     await updateDoc(docRef, { 'item.cantidad': updatedQuantity });
-        // } else {
-        //     // Si el producto no existe, agrégalo a Firestore
-        //     item.cantidad += quantity;
-        //     await addDoc(ordenesCollection, { item: { ...item, cantidad: quantity } });
-
-        // }
-    };
-
-    const actualizarCantidadItemCarrito = (item, quantity) => {
-        const renuevoCarrito = carrito.map((cartItem) =>
-            cartItem.id === item.id ? { ...cartItem, cantidad: cartItem.cantidad + quantity } : cartItem
-        );
-        setCarrito(renuevoCarrito);
     };
 
     // Operaciones relacionadas con Firebase Firestore
-    const agregarEnFirestore = async (item, quantity) => {
-        // Agrega el item al carrito en Firestore
-        setCarrito([...carrito, { ...item, cantidad: quantity }]);
-
+    const agregarEnFirestore = async () => {
         // Obtiene la instancia de Firestore
         const db = getFirestore();
 
         // Obtiene la colección de "ordenes" en Firestore
         const ordenesCollection = collection(db, 'ordenes');
 
-        // Agrega el item y su cantidad a la colección de "ordenes" en Firestore
-        await addDoc(ordenesCollection, { item, cantidad: quantity });
+        // Itera sobre cada elemento del carrito
+        // Construye el objeto de pedido que contiene todos los productos del carrito
+        const pedido = {
+            productos: carrito.map(item => {
+                const { cantidad, ...producto } = item; // Elimina la propiedad "cantidad" del producto
+                return { producto, cantidad }; // Retorna el producto y su cantidad como un objeto
+            })
+        };
+
+        // Agrega el pedido completo a la colección "ordenes" en Firestore
+        await addDoc(ordenesCollection, pedido);
     };
 
     const removeItem = (itemId) => {
-        const extraerProductoCarrito = carrito.filter(item => item.id !== itemId);
+        // Encuentra el producto que se va a eliminar
+        const productoAEliminar = carrito.find(item => item.id === itemId);
 
-        const nuevoTotal = calcularSubtotal(extraerProductoCarrito);
+        // Calcula el subtotal del producto que se va a eliminar
+        const subtotalProductoAEliminar = calcularSubtotal(productoAEliminar.precio, productoAEliminar.cantidad);
 
-        setCarrito(extraerProductoCarrito);
-        setTotalCompra(nuevoTotal)
+        // Filtra el carrito para eliminar el producto
+        const nuevoCarrito = carrito.filter(item => item.id !== itemId);
+
+        // Calcula el nuevo total de la compra restando el subtotal del producto eliminado
+        const nuevoTotalCompra = totalCompra - subtotalProductoAEliminar;
+
+        // Actualiza el estado del carrito y el total de la compra
+        setCarrito(nuevoCarrito);
+        setTotalCompra(nuevoTotalCompra);
     };
 
     const clear = () => {
@@ -124,6 +112,7 @@ export const CartProvider = ({ children }) => {
         totalCompra,
         calcularSubtotal,
         calcularTotal,
+        agregarEnFirestore,
     }
 
     return (
