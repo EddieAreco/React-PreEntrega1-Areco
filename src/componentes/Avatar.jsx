@@ -1,8 +1,7 @@
-import React from "react";
-import { Avatar, Badge, DropdownMenu, DropdownItem, DropdownTrigger, Dropdown } from '@nextui-org/react';
 import { NotificationIcon } from "../componentes/NotificationIcon.jsx";
 import '../css/Usuario.css';
 
+import { Avatar, Badge, DropdownMenu, DropdownItem, DropdownTrigger, Dropdown } from '@nextui-org/react';
 
 export default function Usuario() {
 

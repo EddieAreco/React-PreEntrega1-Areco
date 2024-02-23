@@ -1,6 +1,6 @@
-import { Image } from "@nextui-org/react";
-
 import Estrellas from './Estrellas.jsx';
+
+import { Image } from "@nextui-org/react";
 
 export default function Testimonio(props) {
         return (

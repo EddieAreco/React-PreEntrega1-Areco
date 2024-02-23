@@ -1,4 +1,3 @@
-import React from "react";
 import {Checkbox, Link, User, Chip, cn} from "@nextui-org/react";
 
 export const CustomCheckbox = ({ user, statusColor, value }) => {

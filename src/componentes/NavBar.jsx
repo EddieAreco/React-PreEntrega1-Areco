@@ -1,18 +1,19 @@
 import React from "react";
 import { useState, useContext } from "react";
-import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Tooltip } from "@nextui-org/react";
 import { SearchIcon } from "./SearchIcon.jsx";
 import Categorias from "../componentes/Categorias.jsx";
 import Logo from "../componentes/Logo.jsx";
 import Usuario from "../componentes/Avatar.jsx";
-import CartWidget from "../componentes/CartWidget.jsx";
+import {CartWidget} from "../componentes/CartWidget.jsx";
 import { NavLink, Link } from 'react-router-dom';
 import { CartContext } from '../context/cartContext.jsx';
 // AQUI QUITE EL COMPONENTE LINK DE NEXTUI Y LO REEMPLACE POR OTRO DEL MIMSMO NOMBRE QUE TRAIGO DE ROUTER
 
-export default function NavBar() {
+export default function NavBar( { onSearchChange }) {
 
-    const [active, setActive] = useState(false)
+    const [searchTerm, setSearchTerm] = useState("");
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const { totalCompra } = useContext(CartContext)
@@ -24,6 +25,12 @@ export default function NavBar() {
         "Iniciar Sesión",
     ];
 
+    const handleSearchChange = (event) => {
+        const term = event.target.value;
+        setSearchTerm(term);
+        onSearchChange(term); // Llama a la función proporcionada por la prop para pasar el término de búsqueda al padre
+    };
+
     return (
         <Navbar
             isBordered
@@ -34,7 +41,7 @@ export default function NavBar() {
             <NavbarContent className="sm:hidden" justify="start">
                 <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
 
-                <NavbarBrand>
+                <NavbarBrand className="min-w-[100px]">
 
                     <NavLink to={`/`}>
 
@@ -121,6 +128,11 @@ export default function NavBar() {
 
             <NavbarContent as="div" className="items-center" justify="end">
 
+            <Tooltip 
+            showArrow={true} 
+            placement="bottom" 
+            offset={15}
+            content="Aquí puedes buscar tus productos">
                 <Input
                     classNames={{
                         base: "max-w-full sm:max-w-[20rem] h-10",
@@ -128,11 +140,15 @@ export default function NavBar() {
                         input: "text-small",
                         inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
                     }}
+                    className="min-w-[100px]"
                     placeholder="Buscador"
                     size="sm"
                     startContent={<SearchIcon size={18} />}
                     type="search"
+                    onChange={ handleSearchChange }
+                    value={ searchTerm }
                 />
+                </Tooltip>
 
                 <Usuario />
 

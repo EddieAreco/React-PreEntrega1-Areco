@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
 import { getDocs, getFirestore, collection } from "firebase/firestore";
-import { NavLink } from "react-router-dom";
 
 export default function Categorias() {
 

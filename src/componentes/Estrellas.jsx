@@ -1,6 +1,5 @@
-import React from 'react';
-import { useState } from 'react';
-import { FaStarHalfAlt } from 'react-icons/fa';
+import React, { useState } from 'react';
+
 import { BsFillStarFill, BsStar } from 'react-icons/bs';
 
 function Estrellas() {

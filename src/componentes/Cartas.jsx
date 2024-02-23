@@ -1,7 +1,7 @@
-import React from "react";
-import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import BotonesCards from './BotonesCards.jsx';
 import { Link } from "react-router-dom";
+
+import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 export const Cartas = ({ products, descripcion, link }) => {
 
   return (

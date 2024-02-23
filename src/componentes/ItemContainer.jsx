@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
 import { Cartas } from './Cartas.jsx';
 import { Loading } from './Loading.jsx';
+
+import { useParams, Link } from "react-router-dom";
 
 import { getDocs, getFirestore, collection, where, query } from 'firebase/firestore';
 

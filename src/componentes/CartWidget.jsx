@@ -1,9 +1,11 @@
-import { FaCartShopping } from "react-icons/fa6";
-import { Image, Badge } from '@nextui-org/react';
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { CartContext } from "../context/cartContext";
 
-export default function CartWidget() {
+import { FaCartShopping } from "react-icons/fa6";
+
+import { Image, Badge, Tooltip } from '@nextui-org/react';
+
+export const CartWidget = React.forwardRef((props, ref) => {
 
     const [conteo, setConteo] = useState(0);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -21,26 +23,29 @@ export default function CartWidget() {
     return (
 
         <>
+            <Tooltip 
+            showArrow={true} 
+            placement="bottom" 
+            content="haz click aqui para pre visualizar tus productos del carrito">
 
-            <Badge
-                color="danger"
-                content={cantidadComprada()}
-                shape="circle"
-                placement="bottom-right"
-                onClick={toggleDropdown}
-            >
+                <Badge
+                    color="danger"
+                    content={cantidadComprada()}
+                    shape="circle"
+                    placement="bottom-right"
+                    onClick={toggleDropdown}
+                >
 
-                <FaCartShopping
-                    style={{ fontSize: 30 }}
-                    onClick={handleClick}
-                    role="button"
-                />
 
-                {/*
-AQUI QUIERO LOGRAR UN MENU QUE REFLEJE LO QUE VA COMPRANDO EL USUARIO CON NOMBRE, PRECIO Y TOTAL DE COMPRA, PERO QUE SE PUEDA VER SOLO CADA VEZ QUE EL USUARIO HAGA CLICK SOBRE EL CARRITO, TAL VEZ DEBA HACER UN COMPONENTE APARTE Y QUE EL MISMO TRAIGO DE CARTCONTEXT CARRITO, CANTIDAD COMPRADA Y TAL VEZ DEBA CREAR UNA NUEVA PROP QUE SEA TOTAL
-*/}
+                    <FaCartShopping
+                        style={{ fontSize: 30 }}
+                        onClick={handleClick}
+                        role="button"
+                    />
 
-            </Badge>
+                </Badge>
+                
+            </Tooltip>
 
             <div className="flex flex-col ml-2">
                 <p>Total:</p>
@@ -55,12 +60,12 @@ AQUI QUIERO LOGRAR UN MENU QUE REFLEJE LO QUE VA COMPRANDO EL USUARIO CON NOMBRE
 
                         <div key={index} className="border-b-3 mb-2">
 
-                            <div className="flex items-center gap-2">
+                            <div className="flex justify-between items-center gap-2">
 
                                 <div className="mr-5">
 
-                                <Image width={100} src={item.imagen}/>
-                                <p>{item.nombre}</p>
+                                    <Image width={100} src={item.imagen} />
+                                    <p>{item.nombre}</p>
 
                                 </div>
 
@@ -80,4 +85,4 @@ AQUI QUIERO LOGRAR UN MENU QUE REFLEJE LO QUE VA COMPRANDO EL USUARIO CON NOMBRE
 
         </>
     )
-}
+});

@@ -1,6 +1,5 @@
-import { addDoc, getFirestore, collection, doc, getDocs, updateDoc } from "firebase/firestore";
-import { createContext, useState, useEffect, useReducer } from "react";
-import { CartReducer, sumItems } from './cartReducer';
+import { addDoc, getFirestore, collection } from "firebase/firestore";
+import { createContext, useState, useEffect } from "react";
 
 export const CartContext = createContext()
 
@@ -8,6 +7,30 @@ export const CartProvider = ({ children }) => {
 
     const [carrito, setCarrito] = useState([]);
     const [totalCompra, setTotalCompra] = useState(0);
+
+    const [cartItems, setCartItems] = useState([]);
+
+    // const incrementarCantidad = (productId) => {
+    //     setCartItems(prevCartItems => {
+    //         return prevCartItems.map(item => {
+    //             if (item.id === productId && item.quantity < item.stock) {
+    //                 return { ...item, quantity: item.quantity + 1 };
+    //             }
+    //             return item;
+    //         });
+    //     });
+    // };
+
+    // const disminuirCantidad = (productId) => {
+    //     setCartItems(prevCartItems => {
+    //         return prevCartItems.map(item => {
+    //             if (item.id === productId && item.quantity > 0) {
+    //                 return { ...item, quantity: item.quantity - 1 };
+    //             }
+    //             return item;
+    //         });
+    //     });
+    // };
 
     const calcularSubtotal = (precio, cantidad) => {
         return precio * cantidad;
@@ -104,7 +127,6 @@ export const CartProvider = ({ children }) => {
 
     const contextValues = {
         carrito,
-        setCarrito,
         handleAdd,
         cantidadComprada,
         removeItem,
@@ -113,6 +135,8 @@ export const CartProvider = ({ children }) => {
         calcularSubtotal,
         calcularTotal,
         agregarEnFirestore,
+        // incrementarCantidad,
+        // disminuirCantidad,
     }
 
     return (
