@@ -2,6 +2,7 @@ import Estrellas from './Estrellas.jsx';
 
 import { Image } from "@nextui-org/react";
 
+//ESTE COMPONENTE CONTIENE EL TESTIMONIO DE CADA USUARIO, EL CUAL TIENE LA FOTO DE PERFIL, EL NOMBRE Y APELLIDO Y SU OPINION, ADEMAS TIENE UN CALIFICADOR DE ESTRELLAS QUE LO PUEDE HACER CADA USUARIO
 export default function Testimonio(props) {
         return (
 

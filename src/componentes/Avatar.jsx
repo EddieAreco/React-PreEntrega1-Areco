@@ -1,8 +1,8 @@
 import { NotificationIcon } from "../componentes/NotificationIcon.jsx";
-import '../css/Usuario.css';
 
 import { Avatar, Badge, DropdownMenu, DropdownItem, DropdownTrigger, Dropdown } from '@nextui-org/react';
 
+//ESTE COMPONENTE CONTIENE EL AVATAR DEL USUARIO QUE SE LOGUEA CON UN MENU DE OPCIONES PARA PODER ACCEDER A OTRAS PARTES DEL SITIO
 export default function Usuario() {
 
     return (

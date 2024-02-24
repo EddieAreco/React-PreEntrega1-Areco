@@ -1,7 +1,10 @@
 import { Select, SelectItem, Button } from "@nextui-org/react";
 
+//ESTE COMPONENTE TIENE LA FUNCIONALIDAD DE SER UN FILTRO QUE EL USUARIO PUEDA USAR PARA ORDENAR LOS PRODUCTOS
 export const Filtros = ({ filtro, setFiltro, limpiarFiltro }) => {
 
+
+    //CREO UN ARRAY DE OBJETOS QUE VOY A UTILIZAR PARA QUE SE VEAN LAS OPCIONES QUE TIENE EL USUARIO
     const opciones = [
         {label:"Ordenar de A a la Z", value: "AZ" },
         {label:"Ordenar de Z a la A", value: "ZA" },
@@ -9,6 +12,7 @@ export const Filtros = ({ filtro, setFiltro, limpiarFiltro }) => {
         {label:"Ordenar de Precio menor a mayor", value: "-+" }
     ]
 
+    //ESTA FUNCION VA A TOMAR EL VALOR DE CADA UNA DE LAS OPCIONES (SEGUN CUAL SE ELIJA) Y SE VA A APLICAR A FILTRO PARA MODIFICAR EL ESTADO DE ESTE, LUEGO, EN BASE A ESTO, EN OTRO COMPONENTE, SE VA A PROCEDER A REALIZAR OTRA FUNCION EN LA CUAL SE APLICARAN LOS CRITERIOS PARA FILTRAR
     const handleSelectChange = (event) => {
         const selectedValue = event.target.value;
         setFiltro(selectedValue);

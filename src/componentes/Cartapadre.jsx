@@ -2,7 +2,9 @@ import BotonesCards from './BotonesCards.jsx';
 import { Link } from "react-router-dom";
 
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
-export const Cartas = ({ products, descripcion, link }) => {
+
+//EN ESTE COMPONENTE SE ENCUENTRA UN MAP QUE SIRVA PARA RE UTILIZAR EN OTROS COMPONENTES EN EL CUAL SE MUESTRE UNA TARJETA DE UN PRODUCTO CON INFORMACION, DENTRO DEL MISMO, ENCONTRAMOS PROPS PARA DESPUES USAR CON EL FIN QUE HAYA INFORMACION QUE SE MUESTRE O NO 
+export const Cartapadre = ({ products, descripcion, link }) => {
 
   return (
     <>

@@ -1,5 +1,6 @@
 import React from "react";
 
+//ESTE COMPONENTE ES SIMPLEMENTE EL ICONO QUE SE ENCUENTRA DENTRO DE LA FOTO DE PERFIL DEL USUARIO DONDE LE APARECERIA UNA NOTIFICACION SI HAY NOVEDADES
 export const NotificationIcon = ({size, height, width, ...props}) => {
   return (
     <svg

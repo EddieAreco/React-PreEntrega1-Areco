@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Cartas } from "./Cartas.jsx";
+import { Cartapadre } from './Cartapadre';
 import { Loading } from './Loading.jsx';
 import { Filtros } from "./Filtros.jsx";
 
@@ -137,7 +137,7 @@ export default function ItemListContainer({ searchTerm }) {
 
                 {
                     productos.map(producto => (
-                        <Cartas key={producto.id} products={producto} descripcion={false} link={true} />
+                        <Cartapadre key={producto.id} products={producto} descripcion={false} link={true} />
                     ))
                 }
 
