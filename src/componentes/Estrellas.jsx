@@ -31,7 +31,7 @@ function Estrellas() {
                             name='star'
                             value= {number} 
 
-                            //EN LA FUNCION DEFINO QUE LA FUNCION SETSTAR TOME EL VALOR DE LA VARIABLE NUMBER CADA QUE SE HAGA CLICK SOBRE EL INPUT
+                            //EN LA FUNCIÓN DEFINO QUE LA FUNCIÓN SETSTAR TOME EL VALOR DE LA VARIABLE NUMBER CADA QUE SE HAGA CLICK SOBRE EL INPUT
                             onClick={() => setStar(number)} 
                             />
 

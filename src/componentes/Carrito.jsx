@@ -7,19 +7,22 @@ import { NavLink } from 'react-router-dom';
 
 import { Image, Button, BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
 
+//ESTE COMPONENTE ES EL QUE REFLEJA LOS PRODUCTOS CARGADOS POR EL USUARIO EN EL CARRITO CON SU IMAGEN, NOMBRE, CANTIDAD, PRECIO Y SUB TOTAL. ADEMAS TAMBIEN TENEMOS EL TOTAL DE LA COMPRA, EL ELEMENTO "MIGAJAS" Y LA ALTERNATIVA DE QUE EL USUARIO PUEDA BORRAR TODOS LOS PRODUCTOS DEL CARRITO, EN CUYO CASO, SI ESTÁ VACÍO, SE MUESTRE UN MENSAJE
 export default function Carrito() {
 
     const { carrito, clear, removeItem, totalCompra, calcularSubtotal, agregarEnFirestore } = useContext(CartContext)
 
+    //EN ESTA FUNCIÓN, UTILIZAMOS LA FUNCIÓN removeItem PARA DARLE LA UTILIDAD CORRESPONDIENTE
     const quitarItem = (itemId) => {
         removeItem(itemId)
     }
 
-    // Función para calcular el subtotal de un producto
+    // FUNCIÓN PARA CALCULAR EL SUB TOTAL DE UN PRODUCTO
     const subTotalCarrito = (precio, cantidad) => {
         return calcularSubtotal(precio, cantidad);
     };
 
+    //EN ESTA FUNCIÓN, UTILIZAMOS LA FUNCIÓN agregarEnFirestore Y LUEGO clear PARA VACIAR EL CARRITO Y SE PUEDA PROCEDER A UN NUEVO PEDIDO
     const pedidoRealizado = () => {
         agregarEnFirestore();
         clear();
@@ -27,6 +30,7 @@ export default function Carrito() {
 
     return (
         <>
+        {/* //SI EL CARRITO TIENE PRODUCTOS, AGREGO EL ELEMENTO "MIGAJAS" */}
             {carrito.length > 0 && (
                 <div>
 
@@ -66,6 +70,7 @@ export default function Carrito() {
 
             <div className='mx-auto mt-3 text-white'>
 
+            {/* //SI EL CARRITO TIENE PRODUCTOS, REALIZO UN MAP PARA QUE SE REFLEJEN LOS MISMOS EN UNA TABLA, CASO CONTRARIO, APARECE UN MENSAJE QUE LE INDICA AL USUARIO QUE EL CARRITO ESTÁ VACÍO */}
                 {carrito.length > 0 ? (
 
                     carrito.map((item, index) => (
@@ -103,6 +108,8 @@ export default function Carrito() {
                     </p>
 
                 )}
+
+                {/* //SI EL CARRITO TIENE PRODUCTOS, INCORPORO EL BOTÓN PARA VACIAR EL CARRITO, MUESTRO EL TOTAL DE LA COMPRA Y EL BOTÓN PARA REALIZAR EL PEDIDO PARA FINALIZAR LA COMPRA */}
                 {carrito.length > 0 && (
                     <div>
 
