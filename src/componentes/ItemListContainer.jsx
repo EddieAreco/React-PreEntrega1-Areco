@@ -114,6 +114,7 @@ export default function ItemListContainer({ searchTerm }) {
     ) : (
 
         <>
+        
             <h1 className="text-white text-5xl my-3">{titulo}</h1>
 
             {/* //COMPONENTE PARA FILTRAR */}
