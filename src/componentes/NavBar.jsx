@@ -3,11 +3,10 @@ import Logo from "../componentes/Logo.jsx";
 import Usuario from "../componentes/Avatar.jsx";
 import Categorias from "../componentes/Categorias.jsx";
 import { CartWidget } from "../componentes/CartWidget.jsx";
-import { CartContext } from '../context/cartContext.jsx';
 import { SearchIcon } from "./SearchIcon.jsx";
 
 import { NavLink, Link } from 'react-router-dom';
-import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Tooltip } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Input, DropdownTrigger, Dropdown, Tooltip } from "@nextui-org/react";
 
 //ESTE COMPONENTE SE UBICA EN LA PARTE DE ARRIBA DEL SITIO Y DENTRO TIENE EL LOGO Y NOMBRE DE LA EMPRESA, UN BUSCADOR DE PRODUCTOS, UN APARTADO DE USUARIO PARA CUANDO EL MISMO SE LOGUEE, UN CARRITO QUE ALMACENA LOS PRODUCTOS COMPRADOS Y EL VALOR DE LA COMPRA TOTAL
 
@@ -17,14 +16,14 @@ export default function NavBar({ onSearchChange }) {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const { totalCompra } = useContext(CartContext)
-
     //CRREACION DE ARRAY DE LOS ITEMS DEL MENU DESPLEGABLE AL CUAL LUEGO LE VAMOS A HACER UN MAPEO
     const menuItems = [
         "Nosotros",
-        <Categorias />,
+        <p className="ml-1"><Categorias /></p>,
         "Carrito",
-        "Iniciar Sesión",
+        <Link to={'/login'} className="ml-5">
+            Iniciar Sesión
+        </Link>,
     ];
 
     //ESTA FUNCION VA A TOMAR EL VALOR DE CADA UNA DE LAS LETRAS INGRESADAS POR EL USUARIO EN EL INPUT DE BUSQUEDA Y SE VA A APLICAR A searchTerm PARA MODIFICAR EL ESTADO DE ESTE, LUEGO, EN BASE A ESTO, SE VA A PROCEDER A BUSCAR LOS PRODUCTOS
@@ -91,24 +90,24 @@ export default function NavBar({ onSearchChange }) {
                     </NavbarItem>
 
                 </NavbarContent>
-                
+
                 {/* //ESTE ES EL MAPEO DEL ARRAY menuItems QUE SE VA A MOSTRAR EN VISUALIZACION MOBILE, TUVE QUE HACER UN CONDICIONAL PARA QUE AL HACER CLICK SOBRE CATEGORIAS, QUE ES UN COMPONENTE, NO SE ROMPIERA EL ENLACE Y FUNCIONARA BIEN EL RE DIRECCIONAMIENTO */}
-                <NavbarMenu className="mt-5">
+                <NavbarMenu>
                     {menuItems.map((item, index) => (
-                        <NavbarMenuItem key={`${item}-${index}`}>
+                        <NavbarMenuItem key={`${item}-${index}`} >
                             {typeof item === 'string' ? (
                                 <NavLink
-                                to={`/${item}`}
-                                className="w-full ms-5"
-                                href="#"
-                                size="lg"
-                            >
-                                {item}
-                            </NavLink>
-                            ): (
+                                    to={`/${item}`}
+                                    className="w-full ms-5"
+                                    href="#"
+                                    size="lg"
+                                >
+                                    {item}
+                                </NavLink>
+                            ) : (
                                 item
                             )}
-                            
+
                         </NavbarMenuItem>
                     ))}
 

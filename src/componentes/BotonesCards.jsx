@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { CartContext } from '../context/cartContext';
+import { CartContext } from "../context/CartContext";
 
 import { TbShoppingCartPlus, TbShoppingCartMinus } from "react-icons/tb";
 import { Button } from "@nextui-org/react";

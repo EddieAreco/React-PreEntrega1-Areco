@@ -1,16 +1,23 @@
-import { useContext } from 'react';
-import { CartContext } from '../context/cartContext.jsx';
+import { useContext, useState } from 'react';
+import { CartContext } from '../context/CartContext.jsx';
+import useUser from './useUser.jsx';
 
 import { BsFillCartXFill, BsCartCheckFill } from "react-icons/bs";
-import { CiFaceFrown } from "react-icons/ci";
+import { CiFaceFrown, CiFaceSmile } from "react-icons/ci";
 import { NavLink } from 'react-router-dom';
 
-import { Image, Button, BreadcrumbItem, Breadcrumbs } from '@nextui-org/react';
+import { Image, Button, BreadcrumbItem, Breadcrumbs, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/react';
 
-//ESTE COMPONENTE ES EL QUE REFLEJA LOS PRODUCTOS CARGADOS POR EL USUARIO EN EL CARRITO CON SU IMAGEN, NOMBRE, CANTIDAD, PRECIO Y SUB TOTAL. ADEMAS TAMBIEN TENEMOS EL TOTAL DE LA COMPRA, EL ELEMENTO "MIGAJAS" Y LA ALTERNATIVA DE QUE EL USUARIO PUEDA BORRAR TODOS LOS PRODUCTOS DEL CARRITO, EN CUYO CASO, SI ESTÁ VACÍO, SE MUESTRE UN MENSAJE
+//ESTE COMPONENTE ES EL QUE REFLEJA LOS PRODUCTOS CARGADOS POR EL USUARIO EN EL CARRITO CON SU IMAGEN, NOMBRE, CANTIDAD, PRECIO Y SUB TOTAL. ADEMAS TAMBIEN TENEMOS EL TOTAL DE LA COMPRA, EL ELEMENTO "MIGAJAS", SE HACE EL CHECK OUT PARA VER SI EL USUARIO ESTA LOGUEADO O NO Y LA ALTERNATIVA DE QUE EL USUARIO PUEDA BORRAR TODOS LOS PRODUCTOS DEL CARRITO, EN CUYO CASO, SI ESTÁ VACÍO, SE MUESTRE UN MENSAJE
 export default function Carrito() {
 
-    const { carrito, clear, removeItem, totalCompra, calcularSubtotal, agregarEnFirestore } = useContext(CartContext)
+    const [modalPedido, setModalPedido] = useState(false)
+
+    const { isLogged } = useUser()
+
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+    const { carrito, clear, removeItem, totalCompra, calcularSubtotal, agregarEnFirestore, pedidoId } = useContext(CartContext)
 
     //EN ESTA FUNCIÓN, UTILIZAMOS LA FUNCIÓN removeItem PARA DARLE LA UTILIDAD CORRESPONDIENTE
     const quitarItem = (itemId) => {
@@ -22,15 +29,21 @@ export default function Carrito() {
         return calcularSubtotal(precio, cantidad);
     };
 
-    //EN ESTA FUNCIÓN, UTILIZAMOS LA FUNCIÓN agregarEnFirestore Y LUEGO clear PARA VACIAR EL CARRITO Y SE PUEDA PROCEDER A UN NUEVO PEDIDO
-    const pedidoRealizado = () => {
-        agregarEnFirestore();
-        clear();
+
+    //EN ESTA FUNCIÓN, UTILIZAMOS LA FUNCIÓN agregarEnFirestore, SE TRAE EL ID DEL PEDIDO, EL MENSAJE DEL PEDIDO SE PASA A true Y LUEGO clear PARA VACIAR EL CARRITO Y SE PUEDA PROCEDER A UN NUEVO PEDIDO
+    const pedidoRealizado = async () => {
+        if (isLogged) {
+            const pedido = await agregarEnFirestore();
+            setModalPedido(true);
+            clear()
+        } else {
+            onOpen();
+        }
     }
 
     return (
         <>
-        {/* //SI EL CARRITO TIENE PRODUCTOS, AGREGO EL ELEMENTO "MIGAJAS" */}
+            {/* //SI EL CARRITO TIENE PRODUCTOS, AGREGO EL ELEMENTO "MIGAJAS" */}
             {carrito.length > 0 && (
                 <div>
 
@@ -70,7 +83,7 @@ export default function Carrito() {
 
             <div className='mx-auto mt-3 text-white'>
 
-            {/* //SI EL CARRITO TIENE PRODUCTOS, REALIZO UN MAP PARA QUE SE REFLEJEN LOS MISMOS EN UNA TABLA, CASO CONTRARIO, APARECE UN MENSAJE QUE LE INDICA AL USUARIO QUE EL CARRITO ESTÁ VACÍO */}
+                {/* //SI EL CARRITO TIENE PRODUCTOS, REALIZO UN MAP PARA QUE SE REFLEJEN LOS MISMOS EN UNA TABLA, CASO CONTRARIO, APARECE UN MENSAJE QUE LE INDICA AL USUARIO QUE EL CARRITO ESTÁ VACÍO */}
                 {carrito.length > 0 ? (
 
                     carrito.map((item, index) => (
@@ -98,12 +111,10 @@ export default function Carrito() {
 
                     <p className='mx-auto mt-3 text-white bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-amber-300 dark:focus:ring-amber-800 shadow-lg shadow-amber-500/50 dark:shadow-lg dark:shadow-amber-800/80 p-5'>
                         No hay productos en el carrito  <CiFaceFrown className='inline' style={{ fontSize: 25 }} />.
-                        <NavLink to={'/'}>
-                            <a className='ms-1'>
+                        <NavLink to={'/'} className='ms-1'>
                                 <strong>
                                     Agregue productos
                                 </strong>
-                            </a>
                         </NavLink>
                     </p>
 
@@ -137,6 +148,57 @@ export default function Carrito() {
                         </Button>
                     </div>
                 )}
+
+                {/* //SI EL USUARIO NO ESTÁ LOGUEADO Y EL CARRITO TIENE PRODUCTOS, NO SE PERMITE REALIZAR EL PEDIDO PARA FINALIZAR LA COMPRA Y APARECE UN MENSAJE PARA QUE VAYA A INICIAR SESIÓN*/}
+                {!isLogged && carrito.length > 0 &&
+
+                    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='center'>
+
+                        <ModalContent>
+                            {(onClose) => (
+                                <>
+                                    <ModalHeader className="flex flex-col gap-1">Aclaración</ModalHeader>
+                                    <ModalBody>
+                                        <p>
+                                            Para poder finalizar el pedido, debes iniciar sesión. Para esto, haz click sobre el ícono de usuario que se encuentra arriba, en la barra de navegación
+                                        </p>
+
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button color="danger" variant="light" onPress={onClose}>
+                                            Close
+                                        </Button>
+                                    </ModalFooter>
+                                </>
+                            )}
+                        </ModalContent>
+                    </Modal>
+                }
+
+                {/* //SI EL PEDIDO SE FINALIZA, APARECE UN MENSAJE DONDE SE LE OTORGA EL ID AL USUARIO*/}
+                {pedidoId.length > 0 &&
+
+                    <Modal isOpen={modalPedido} onOpenChange={setModalPedido} placement='center'>
+
+                        <ModalContent>
+                            {(onClose) => (
+                                <>
+                                    <ModalHeader className="flex flex-col gap-1">ID de pedido</ModalHeader>
+                                    <ModalBody>
+                                        <p>
+                                            Gracias por su compra! <CiFaceSmile className='inline' style={{ fontSize: 25 }} /> El identificador de su compra es: <strong className='font-bold inline'>{pedidoId[pedidoId.length-1]}</strong>
+                                        </p>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button color="danger" variant="light" onPress={onClose}>
+                                            Close
+                                        </Button>
+                                    </ModalFooter>
+                                </>
+                            )}
+                        </ModalContent>
+                    </Modal>
+                }
 
             </div>
 

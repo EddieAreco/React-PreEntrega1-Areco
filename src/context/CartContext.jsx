@@ -10,6 +10,12 @@ export const CartProvider = ({ children }) => {
     const [carrito, setCarrito] = useState([]);
     const [totalCompra, setTotalCompra] = useState(0);
 
+    const [pedidoId, setPedidoId] = useState([]);
+    const [totalPedido, setTotalPedido] = useState([])
+    const [fecha, setFecha] = useState([])
+
+    const [jwt, setJWT] = useState(null)
+
     //FUNCION PARA CALCULAR EL SUB TOTAL EN BASE AL PRECIO Y CANTIDAD DEL PRODUCTO
     const calcularSubtotal = (precio, cantidad) => {
         return precio * cantidad;
@@ -54,16 +60,35 @@ export const CartProvider = ({ children }) => {
         //OBTIENE LA COLECCIÓN DE "ORDENES" DE FIRESTORE
         const ordenesCollection = collection(db, 'ordenes');
 
-        //CONSTRUYO EL OBJETO DE PEDIDO QUE CONTIENE TODOS LOS PRODUCTOS DE CARRITO
+        //CONSTRUYO EL OBJETO DE PEDIDO QUE CONTIENE TODOS LOS PRODUCTOS DE CARRITO, EL COSTO TOTAL DEL MISMO Y LA FECHA EN QUE SE REALIZÓ
         const pedido = {
             productos: carrito.map(item => {
-                const { cantidad, ...producto } = item; 
-                return { producto, cantidad }; 
-            })
+                const { cantidad , ...producto } = item; 
+                return { producto, cantidad};  
+            }),
+            totalPedido: totalCompra,
+            fecha: new Date()
         };
 
-        //AQUI AGREGO EL PEDIDO A FIRESTORE
-        await addDoc(ordenesCollection, pedido);
+        console.log('fecha es,', pedido.fecha)
+        console.log('pedido es,', pedido)
+
+            //AQUI AGREGO EL PEDIDO A FIRESTORE
+            const docRef = await addDoc(ordenesCollection, pedido);
+    
+            //Obtener el ID del documento recién creado
+            const nuevoIdPedido = docRef.id;
+            console.log("ID del nuevo pedido:", nuevoIdPedido);
+            setPedidoId([...pedidoId, nuevoIdPedido]);
+
+            const totalPagarPedido = pedido.totalPedido;
+            console.log('totalPedido', totalPagarPedido)
+            setTotalPedido([...totalPedido, totalPagarPedido])
+
+            const fechaCompra = pedido.fecha;
+            console.log('fecha de compra es', fechaCompra)
+            setFecha([...fecha, fechaCompra])
+    
     };
 
     //FUNCIÓN QUE USO PARA REMOVER 1 PRODUCTO
@@ -101,7 +126,19 @@ export const CartProvider = ({ children }) => {
     }
 
     const cantidadComprada = () => {
-        return carrito.length;
+
+        let unidadesCompradas = 0;
+
+        if (carrito.length > 0) {
+            carrito.forEach(producto => {
+                unidadesCompradas += producto.cantidad;
+            });
+
+            return unidadesCompradas;
+        }else{
+            return carrito.length
+        }
+            ;
     };
 
     //ESTE USE EFFECT LO USO COMO CONTROLADOR PARA VERIFICAR EL ESTADO DE CARRITO CADA VEZ QUE EL MISMO SE MODIFICA
@@ -120,6 +157,11 @@ export const CartProvider = ({ children }) => {
         calcularSubtotal,
         calcularTotal,
         agregarEnFirestore,
+        pedidoId,
+        totalPedido,
+        fecha,
+        jwt,
+        setJWT,
     }
 
     return (
